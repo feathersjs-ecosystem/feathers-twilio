@@ -1,7 +1,7 @@
 {
   "name": "feathers-twilio",
   "description": "Feathers Twilio Service",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/feathersjs/feathers-twilio",
   "repository": {
     "type": "git",
