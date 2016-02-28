@@ -1,19 +1,20 @@
 /*jshint expr: true*/
 
+import chai from 'chai';
 import { expect } from 'chai';
-import app from './test-app';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+chai.use(sinonChai);
+
+require('sinon-as-promised');
+
+import testApp from './test-app';
 import { sms as smsService } from '../src';
 
 let server;
+let app;
 
 describe('Twilio SMS Service', function () {
-  before(done => {
-    server = app.listen(3030, () => {
-      done();
-    });
-  });
-
-  after(done => server.close(() => done()));
 
   describe('Initialization', () => {
     describe('when missing accountSid key', () => {
@@ -29,35 +30,135 @@ describe('Twilio SMS Service', function () {
     });
   });
 
+    describe('Validation', () => {
+      before(done => {
+        const options = {
+          accountSid: 'your account sid',
+          authToken: 'your auth token' // ex. your.domain.com
+        };
+        app = testApp(options);
+
+        server = app.listen(3030, () => {
+          done();
+        });
+      });
+
+      after(done => server.close(() => done()));
+
+      describe('when missing from field', () => {
+        it('throws an error', (done) => {
+          app.service('twilio/sms').create({}).then(done).catch(err => {
+            expect(err.code).to.equal(400);
+            expect(err.message).to.equal('`from` must be specified');
+            done();
+          });
+        });
+      });
+
+      describe('when missing to field', () => {
+        it('throws an error', (done) => {
+          app.service('twilio/sms').create({from: '+15005550006'}).then(done).catch(err => {
+            expect(err.code).to.equal(400);
+            expect(err.message).to.equal('`to` must be specified');
+            done();
+          });
+        });
+      });
+
+      describe('when missing body or mediaUrl field', () => {
+        it('throws an error', (done) => {
+          app.service('twilio/sms').create({from: '+15005550006', to: '+15551234567'}).then(done).catch(err => {
+            expect(err.code).to.equal(400);
+            expect(err.message).to.equal('`body` or `mediaUrl` must be specified');
+            done();
+          });
+        });
+      });
+    });
+
   describe('Sending messages', () => {
-    describe('when missing from field', () => {
-      it('throws an error', (done) => {
-        app.service('twilio/sms').create({}).then(done).catch(err => {
-          expect(err.code).to.equal(400);
-          expect(err.message).to.equal('`from` must be specified');
+    var createMessage;
+    beforeEach(function (done) {
+      createMessage =
+        sinon
+          .stub(app.service('twilio/sms').twilio.messages, 'create').resolves({sid: 1234});
+      done();
+    });
+
+    afterEach(function (done) {
+      createMessage.restore();
+      done();
+    });
+
+    describe('from field passed in with create', () => {
+      before(done => {
+        const options = {
+          accountSid: 'your account sid',
+          authToken: 'your auth token' // ex. your.domain.com
+        };
+        app = testApp(options);
+
+        server = app.listen(3030, () => {
           done();
+        });
+      });
+
+      after(done => server.close(() => done()));
+      describe('valid params with body', () => {
+        it('sends a message via Twilio', (done) => {
+          app.service('twilio/sms').create({from: '+15005550006', to: '+15551234567', body: 'BODY'}).then(message => {
+            expect(createMessage).to.have.been.calledWith({from: '+15005550006', to: '+15551234567', body: 'BODY'});
+            expect(message.sid).to.equal(1234);
+            done();
+          });
+        });
+      });
+
+      describe('valid params with mediaUrl', () => {
+        it('sends a message via Twilio', (done) => {
+          app.service('twilio/sms').create({
+            from: '+15005550006',
+            to: '+15551234567',
+            mediaUrl: 'MEDIA_URL'
+          }).then(message => {
+            expect(createMessage).to.have.been.calledWith({
+              from: '+15005550006',
+              to: '+15551234567',
+              mediaUrl: 'MEDIA_URL'
+            });
+            expect(message.sid).to.equal(1234);
+            done();
+          });
         });
       });
     });
 
-    describe('when missing to field', () => {
-      it('throws an error', (done) => {
-        app.service('twilio/sms').create({from: '+15005550006'}).then(done).catch(err => {
-          expect(err.code).to.equal(400);
-          expect(err.message).to.equal('`to` must be specified');
+    describe('from field passed in as option', () => {
+      before(done => {
+        const options = {
+          accountSid: 'your account sid',
+          authToken: 'your auth token',
+          from: '+15005550006'
+        };
+        app = testApp(options);
+
+        server = app.listen(3030, () => {
           done();
         });
       });
-    });
 
-    describe('when missing body or mediaUrl field', () => {
-      it('throws an error', (done) => {
-        app.service('twilio/sms').create({from: '+15005550006', to: '+15551234567'}).then(done).catch(err => {
-          expect(err.code).to.equal(400);
-          expect(err.message).to.equal('`body` or `mediaUrl` must be specified');
-          done();
+      after(done => server.close(() => done()));
+      describe('valid params with body', () => {
+        it('sends a message via Twilio', (done) => {
+          app.service('twilio/sms').create({to: '+15551234567', body: 'BODY'}).then(message => {
+            expect(createMessage).to.have.been.calledWith({from: '+15005550006', to: '+15551234567', body: 'BODY'});
+            expect(message.sid).to.equal(1234);
+            done();
+          });
         });
       });
     });
   });
 });
+
+
