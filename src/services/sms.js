@@ -47,11 +47,11 @@ class Service {
         return reject(new errors.BadRequest('`to` must be specified'));
       }
 
-      if (!data.body || !data.mediaUrl) {
+      if (!data.body && !data.mediaUrl) {
         return reject(new errors.BadRequest('`body` or `mediaUrl` must be specified'));
       }
 
-      return this.twilio.calls.create(data).then(resolve).catch(reject);
+      return this.twilio.messages.create(data).then(resolve).catch(reject);
     });
   }
 }

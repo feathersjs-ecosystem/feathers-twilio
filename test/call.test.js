@@ -2,13 +2,19 @@
 
 
 import { expect } from 'chai';
-import app from './test-app';
+import testApp from './test-app';
 import { call as callService } from '../src';
 
 let server;
+let app;
 
 describe('Twilio Call Service', function () {
   before(done => {
+    const options = {
+      accountSid: 'your account sid',
+      authToken: 'your auth token' // ex. your.domain.com
+    };
+    app = testApp(options);
     server = app.listen(3030, () => {
       done();
     });
@@ -51,7 +57,7 @@ describe('Twilio Call Service', function () {
       });
     });
 
-    describe('when missing body or mediaUrl field', () => {
+    describe('when missing body or applicationSid field', () => {
       it('throws an error', (done) => {
         app.service('twilio/sms').create({from: '+15005550006', to: '+15551234567'}).then(done).catch(err => {
           expect(err.code).to.equal(400);

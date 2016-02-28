@@ -20,7 +20,7 @@ class Service {
   find(params) {
     params = params || {};
     return new Promise((resolve, reject) => {
-      return this.twilio.messages.get().then(resolve).catch(reject);
+      return this.twilio.calls.get().then(resolve).catch(reject);
     });
   }
 
@@ -30,7 +30,7 @@ class Service {
         return reject(new errors.BadRequest('`id` needs to be provided'));
       }
 
-      return this.twilio.messages(id).get().then(resolve).catch(reject);
+      return this.twilio.calls(id).get().then(resolve).catch(reject);
     });
   }
 
@@ -46,8 +46,8 @@ class Service {
         return reject(new errors.BadRequest('`to` must be specified'));
       }
 
-      if (!data.body || !data.mediaUrl) {
-        return reject(new errors.BadRequest('`body` or `mediaUrl` must be specified'));
+      if (!data.body || !data.applicationSid) {
+        return reject(new errors.BadRequest('`body` or `applicationSid` must be specified'));
       }
 
       return this.twilio.calls.create(data).then(resolve).catch(reject);
