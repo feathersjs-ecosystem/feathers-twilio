@@ -1,6 +1,3 @@
-/*jshint expr: true*/
-
-
 import { expect } from 'chai';
 import testApp from './test-app';
 import { call as callService } from '../src';

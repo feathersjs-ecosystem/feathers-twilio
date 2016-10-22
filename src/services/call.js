@@ -2,8 +2,7 @@ import errors from 'feathers-errors';
 import twilio from 'twilio';
 
 class Service {
-  constructor(options = {}) {
-
+  constructor (options = {}) {
     if (!options.accountSid) {
       throw new Error('Twilio `accountSid` needs to be provided');
     }
@@ -17,14 +16,14 @@ class Service {
     this.twilio = twilio(options.accountSid, options.authToken);
   }
 
-  find(params) {
+  find (params) {
     params = params || {};
     return new Promise((resolve, reject) => {
       return this.twilio.calls.get().then(resolve).catch(reject);
     });
   }
 
-  get(id) {
+  get (id) {
     return new Promise((resolve, reject) => {
       if (!id) {
         return reject(new errors.BadRequest('`id` needs to be provided'));
@@ -34,7 +33,7 @@ class Service {
     });
   }
 
-  create(data) {
+  create (data) {
     return new Promise((resolve, reject) => {
       data.from = data.from || this.from;
 
@@ -55,7 +54,7 @@ class Service {
   }
 }
 
-export default function init(options) {
+export default function init (options) {
   return new Service(options);
 }
 
