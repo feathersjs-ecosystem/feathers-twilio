@@ -1,7 +1,4 @@
-/*jshint expr: true*/
-
-import chai from 'chai';
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
@@ -15,7 +12,6 @@ let server;
 let app;
 
 describe('Twilio SMS Service', function () {
-
   describe('Initialization', () => {
     describe('when missing accountSid key', () => {
       it('throws an error', () => {
@@ -30,51 +26,51 @@ describe('Twilio SMS Service', function () {
     });
   });
 
-    describe('Validation', () => {
-      before(done => {
-        const options = {
-          accountSid: 'your account sid',
-          authToken: 'your auth token' // ex. your.domain.com
-        };
-        app = testApp(options);
+  describe('Validation', () => {
+    before(done => {
+      const options = {
+        accountSid: 'your account sid',
+        authToken: 'your auth token' // ex. your.domain.com
+      };
+      app = testApp(options);
 
-        server = app.listen(3030, () => {
+      server = app.listen(3030, () => {
+        done();
+      });
+    });
+
+    after(done => server.close(() => done()));
+
+    describe('when missing from field', () => {
+      it('throws an error', (done) => {
+        app.service('twilio/sms').create({}).then(done).catch(err => {
+          expect(err.code).to.equal(400);
+          expect(err.message).to.equal('`from` must be specified');
           done();
         });
       });
+    });
 
-      after(done => server.close(() => done()));
-
-      describe('when missing from field', () => {
-        it('throws an error', (done) => {
-          app.service('twilio/sms').create({}).then(done).catch(err => {
-            expect(err.code).to.equal(400);
-            expect(err.message).to.equal('`from` must be specified');
-            done();
-          });
-        });
-      });
-
-      describe('when missing to field', () => {
-        it('throws an error', (done) => {
-          app.service('twilio/sms').create({from: '+15005550006'}).then(done).catch(err => {
-            expect(err.code).to.equal(400);
-            expect(err.message).to.equal('`to` must be specified');
-            done();
-          });
-        });
-      });
-
-      describe('when missing body or mediaUrl field', () => {
-        it('throws an error', (done) => {
-          app.service('twilio/sms').create({from: '+15005550006', to: '+15551234567'}).then(done).catch(err => {
-            expect(err.code).to.equal(400);
-            expect(err.message).to.equal('`body` or `mediaUrl` must be specified');
-            done();
-          });
+    describe('when missing to field', () => {
+      it('throws an error', (done) => {
+        app.service('twilio/sms').create({from: '+15005550006'}).then(done).catch(err => {
+          expect(err.code).to.equal(400);
+          expect(err.message).to.equal('`to` must be specified');
+          done();
         });
       });
     });
+
+    describe('when missing body or mediaUrl field', () => {
+      it('throws an error', (done) => {
+        app.service('twilio/sms').create({from: '+15005550006', to: '+15551234567'}).then(done).catch(err => {
+          expect(err.code).to.equal(400);
+          expect(err.message).to.equal('`body` or `mediaUrl` must be specified');
+          done();
+        });
+      });
+    });
+  });
 
   describe('Sending messages', () => {
     var createMessage;
@@ -160,5 +156,4 @@ describe('Twilio SMS Service', function () {
     });
   });
 });
-
 
