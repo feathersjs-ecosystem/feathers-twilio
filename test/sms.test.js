@@ -1,12 +1,10 @@
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-chai.use(sinonChai);
-
-require('sinon-as-promised');
 
 import testApp from './test-app';
 import { sms as smsService } from '../src';
+chai.use(sinonChai);
 
 let server;
 let app;
@@ -21,7 +19,7 @@ describe('Twilio SMS Service', function () {
 
     describe('when missing authToken', () => {
       it('throws an error', () => {
-        expect(smsService.bind(null, {accountSid: 'SID'})).to.throw('Twilio `authToken` needs to be provided');
+        expect(smsService.bind(null, { accountSid: 'SID' })).to.throw('Twilio `authToken` needs to be provided');
       });
     });
   });
@@ -53,7 +51,7 @@ describe('Twilio SMS Service', function () {
 
     describe('when missing to field', () => {
       it('throws an error', (done) => {
-        app.service('twilio/sms').create({from: '+15005550006'}).then(done).catch(err => {
+        app.service('twilio/sms').create({ from: '+15005550006' }).then(done).catch(err => {
           expect(err.code).to.equal(400);
           expect(err.message).to.equal('`to` must be specified');
           done();
@@ -63,7 +61,7 @@ describe('Twilio SMS Service', function () {
 
     describe('when missing body or mediaUrl field', () => {
       it('throws an error', (done) => {
-        app.service('twilio/sms').create({from: '+15005550006', to: '+15551234567'}).then(done).catch(err => {
+        app.service('twilio/sms').create({ from: '+15005550006', to: '+15551234567' }).then(done).catch(err => {
           expect(err.code).to.equal(400);
           expect(err.message).to.equal('`body` or `mediaUrl` must be specified');
           done();
@@ -77,7 +75,7 @@ describe('Twilio SMS Service', function () {
     beforeEach(function (done) {
       createMessage =
         sinon
-          .stub(app.service('twilio/sms').twilio.messages, 'create').resolves({sid: 1234});
+          .stub(app.service('twilio/sms').twilio.messages, 'create').resolves({ sid: 1234 });
       done();
     });
 
@@ -102,8 +100,8 @@ describe('Twilio SMS Service', function () {
       after(done => server.close(() => done()));
       describe('valid params with body', () => {
         it('sends a message via Twilio', (done) => {
-          app.service('twilio/sms').create({from: '+15005550006', to: '+15551234567', body: 'BODY'}).then(message => {
-            expect(createMessage).to.have.been.calledWith({from: '+15005550006', to: '+15551234567', body: 'BODY'});
+          app.service('twilio/sms').create({ from: '+15005550006', to: '+15551234567', body: 'BODY' }).then(message => {
+            expect(createMessage).to.have.been.calledWith({ from: '+15005550006', to: '+15551234567', body: 'BODY' });
             expect(message.sid).to.equal(1234);
             done();
           });
@@ -146,8 +144,8 @@ describe('Twilio SMS Service', function () {
       after(done => server.close(() => done()));
       describe('valid params with body', () => {
         it('sends a message via Twilio', (done) => {
-          app.service('twilio/sms').create({to: '+15551234567', body: 'BODY'}).then(message => {
-            expect(createMessage).to.have.been.calledWith({from: '+15005550006', to: '+15551234567', body: 'BODY'});
+          app.service('twilio/sms').create({ to: '+15551234567', body: 'BODY' }).then(message => {
+            expect(createMessage).to.have.been.calledWith({ from: '+15005550006', to: '+15551234567', body: 'BODY' });
             expect(message.sid).to.equal(1234);
             done();
           });
@@ -156,4 +154,3 @@ describe('Twilio SMS Service', function () {
     });
   });
 });
-

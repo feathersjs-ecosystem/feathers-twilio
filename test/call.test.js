@@ -28,7 +28,7 @@ describe('Twilio Call Service', function () {
 
     describe('when missing authToken', () => {
       it('throws an error', () => {
-        expect(callService.bind(null, {accountSid: 'SID'})).to.throw('Twilio `authToken` needs to be provided');
+        expect(callService.bind(null, { accountSid: 'SID' })).to.throw('Twilio `authToken` needs to be provided');
       });
     });
   });
@@ -46,7 +46,7 @@ describe('Twilio Call Service', function () {
 
     describe('when missing to field', () => {
       it('throws an error', (done) => {
-        app.service('twilio/sms').create({from: '+15005550006'}).then(done).catch(err => {
+        app.service('twilio/sms').create({ from: '+15005550006' }).then(done).catch(err => {
           expect(err.code).to.equal(400);
           expect(err.message).to.equal('`to` must be specified');
           done();
@@ -56,7 +56,7 @@ describe('Twilio Call Service', function () {
 
     describe('when missing body or applicationSid field', () => {
       it('throws an error', (done) => {
-        app.service('twilio/sms').create({from: '+15005550006', to: '+15551234567'}).then(done).catch(err => {
+        app.service('twilio/sms').create({ from: '+15005550006', to: '+15551234567' }).then(done).catch(err => {
           expect(err.code).to.equal(400);
           expect(err.message).to.equal('`body` or `mediaUrl` must be specified');
           done();
