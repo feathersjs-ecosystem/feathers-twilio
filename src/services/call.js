@@ -1,5 +1,5 @@
-import errors from 'feathers-errors';
-import twilio from 'twilio';
+import Twilio from 'twilio';
+import errors from '@feathersjs/errors';
 
 class Service {
   constructor (options = {}) {
@@ -13,13 +13,13 @@ class Service {
 
     this.from = options.from || null;
     this.paginate = options.paginate || {};
-    this.twilio = twilio(options.accountSid, options.authToken);
+    this.twilio = new Twilio(options.accountSid, options.authToken);
   }
 
   find (params) {
     params = params || {};
     return new Promise((resolve, reject) => {
-      return this.twilio.calls.get().then(resolve).catch(reject);
+      return this.twilio.calls.list(params.query || {}).then(resolve).catch(reject);
     });
   }
 
@@ -29,7 +29,7 @@ class Service {
         return reject(new errors.BadRequest('`id` needs to be provided'));
       }
 
-      return this.twilio.calls(id).get().then(resolve).catch(reject);
+      return this.twilio.calls(id).fetch().then(resolve).catch(reject);
     });
   }
 

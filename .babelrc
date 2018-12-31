@@ -1,4 +1,11 @@
 {
-  "plugins": ["add-module-exports"],
-  "presets": [ "es2015" ]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry"
+      }
+    ]
+  ],
+  "plugins": ["add-module-exports"]
 }

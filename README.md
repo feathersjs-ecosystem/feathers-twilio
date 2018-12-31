@@ -1,11 +1,8 @@
 # feathers-twilio
 
 [![Build Status](https://travis-ci.org/feathersjs/feathers-twilio.png?branch=master)](https://travis-ci.org/feathersjs/feathers-twilio)
-[![Code Climate](https://codeclimate.com/github/feathersjs/feathers-twilio.png)](https://codeclimate.com/github/feathersjs/feathers-twilio)
-[![Test Coverage](https://codeclimate.com/github/feathersjs/feathers-twilio/badges/coverage.svg)](https://codeclimate.com/github/feathersjs/feathers-twilio/coverage)
 [![Dependency Status](https://img.shields.io/david/feathersjs/feathers-twilio.svg?style=flat-square)](https://david-dm.org/feathersjs/feathers-twilio)
 [![Download Status](https://img.shields.io/npm/dm/feathers-twilio.svg?style=flat-square)](https://www.npmjs.com/package/feathers-twilio)
-[![Slack Status](http://slack.feathersjs.com/badge.svg)](http://slack.feathersjs.com)
 
 > A [Twilio](https://www.twilio.com) Service for [FeatherJS](https://github.com/feathersjs).
 
