@@ -1,6 +1,6 @@
 # feathers-twilio
 
-[![Build Status](https://travis-ci.org/feathersjs/feathers-twilio.png?branch=master)](https://travis-ci.org/feathersjs/feathers-twilio)
+[![Build Status](https://travis-ci.org/feathersjs-ecosystem/feathers-twilio.png?branch=master)](https://travis-ci.org/feathersjs-ecosystem/feathers-twilio)
 [![Dependency Status](https://img.shields.io/david/feathersjs/feathers-twilio.svg?style=flat-square)](https://david-dm.org/feathersjs/feathers-twilio)
 [![Download Status](https://img.shields.io/npm/dm/feathers-twilio.svg?style=flat-square)](https://www.npmjs.com/package/feathers-twilio)
 
