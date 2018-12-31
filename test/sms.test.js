@@ -27,7 +27,7 @@ describe('Twilio SMS Service', function () {
   describe('Validation', () => {
     before(done => {
       const options = {
-        accountSid: 'your account sid',
+        accountSid: 'AC_your account sid',
         authToken: 'your auth token' // ex. your.domain.com
       };
       app = testApp(options);
@@ -87,7 +87,7 @@ describe('Twilio SMS Service', function () {
     describe('from field passed in with create', () => {
       before(done => {
         const options = {
-          accountSid: 'your account sid',
+          accountSid: 'AC_your account sid',
           authToken: 'your auth token' // ex. your.domain.com
         };
         app = testApp(options);
@@ -130,7 +130,7 @@ describe('Twilio SMS Service', function () {
     describe('from field passed in as option', () => {
       before(done => {
         const options = {
-          accountSid: 'your account sid',
+          accountSid: 'AC_your account sid',
           authToken: 'your auth token',
           from: '+15005550006'
         };

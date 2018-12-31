@@ -8,7 +8,7 @@ let app;
 describe('Twilio Call Service', function () {
   before(done => {
     const options = {
-      accountSid: 'your account sid',
+      accountSid: 'AC_test',
       authToken: 'your auth token' // ex. your.domain.com
     };
     app = testApp(options);

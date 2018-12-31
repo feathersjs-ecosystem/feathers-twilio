@@ -39,7 +39,7 @@
     "release:minor": "npm version minor && npm publish",
     "release:patch": "npm version patch && npm publish",
     "start": "node example/app",
-    "test": "npm run compile && npm run lint && npm run coverage && nsp check",
+    "test": "npm run compile && npm run lint && npm run coverage",
     "watch": "babel --watch -d lib/ src/"
   },
   "dependencies": {
@@ -60,7 +60,6 @@
     "eslint-if-supported": "^1.0.1",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
-    "nsp": "^3.2.1",
     "rimraf": "^2.5.4",
     "semistandard": "^13.0.1",
     "sinon": "^7.2.2",
