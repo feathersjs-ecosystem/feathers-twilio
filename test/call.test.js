@@ -1,6 +1,9 @@
-import { expect } from 'chai';
-import testApp from './test-app';
-import { call as callService } from '../src';
+const {
+  expect
+} = require('chai');
+
+const testApp = require('./test-app');
+const { call: callService } = require('../lib');
 
 let server;
 let app;

@@ -1,9 +1,11 @@
-import chai, { expect } from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+const testApp = require('./test-app');
 
-import testApp from './test-app';
-import { sms as smsService } from '../src';
+const { sms: smsService } = require('../lib');
+const { expect } = chai;
+
 chai.use(sinonChai);
 
 let server;

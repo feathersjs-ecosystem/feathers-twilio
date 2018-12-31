@@ -29,51 +29,36 @@
   ],
   "main": "lib/",
   "scripts": {
-    "compile": "rimraf lib/ && babel -d lib/ src/",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
-    "lint": "eslint-if-supported semistandard --fix",
+    "lint": "semistandard --fix lib/**/*.js test/**/*.js",
     "mocha": "mocha --opts mocha.opts",
-    "prepublish": "npm run compile",
     "publish": "git push origin && git push origin --tags",
     "release:major": "npm version major && npm publish",
     "release:minor": "npm version minor && npm publish",
     "release:patch": "npm version patch && npm publish",
-    "start": "node example/app",
-    "test": "npm run compile && npm run lint && npm run coverage",
-    "watch": "babel --watch -d lib/ src/"
+    "test": "npm run lint && npm run coverage"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.2.5",
     "@feathersjs/errors": "^3.3.5",
     "twilio": "^3.26.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/register": "^7.0.0",
     "@feathersjs/express": "^1.3.0",
     "@feathersjs/feathers": "^3.1.7",
     "@feathersjs/socketio": "^3.2.7",
-    "babel-plugin-add-module-exports": "^1.0.0",
     "chai": "^4.2.0",
-    "eslint-if-supported": "^1.0.1",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.2.0",
-    "rimraf": "^2.5.4",
     "semistandard": "^13.0.1",
     "sinon": "^7.2.2",
     "sinon-chai": "^3.3.0"
   },
   "engines": {
-    "node": ">= 4"
+    "node": ">= 6"
   },
   "semistandard": {
     "env": [
       "mocha"
-    ],
-    "ignore": [
-      "/lib"
     ]
   }
 }
