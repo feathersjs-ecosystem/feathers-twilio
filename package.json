@@ -48,7 +48,7 @@
     "@feathersjs/socketio": "^3.2.7",
     "chai": "^4.2.0",
     "istanbul": "^1.1.0-alpha.1",
-    "mocha": "^5.2.0",
+    "mocha": "^6.0.0",
     "semistandard": "^13.0.1",
     "sinon": "^7.2.2",
     "sinon-chai": "^3.3.0"
