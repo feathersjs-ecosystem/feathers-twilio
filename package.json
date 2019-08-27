@@ -39,7 +39,7 @@
     "test": "npm run lint && npm run coverage"
   },
   "dependencies": {
-    "@feathersjs/errors": "^3.3.5",
+    "@feathersjs/errors": "^4.3.0",
     "twilio": "^3.26.0"
   },
   "devDependencies": {
