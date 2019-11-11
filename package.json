@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@feathersjs/express": "^4.3.0",
-    "@feathersjs/feathers": "^4.3.0",
+    "@feathersjs/feathers": "4.3.10",
     "@feathersjs/socketio": "^4.3.0",
     "chai": "^4.2.0",
     "istanbul": "^1.1.0-alpha.1",
