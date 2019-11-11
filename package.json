@@ -43,7 +43,7 @@
     "twilio": "^3.33.4"
   },
   "devDependencies": {
-    "@feathersjs/express": "^4.3.0",
+    "@feathersjs/express": "4.3.10",
     "@feathersjs/feathers": "^4.3.0",
     "@feathersjs/socketio": "^4.3.0",
     "chai": "^4.2.0",
